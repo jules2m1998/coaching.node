@@ -19,3 +19,5 @@ npm run dev
 
 * **run** attribut de npm permettant l'exécution d'un script dans le fichier ***package.json***.
 * **dev** le nom du script à exécuter.
+
+## Pour rendre de l'html
