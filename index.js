@@ -27,7 +27,13 @@ function requestListener(req, res) {
                 res.end("Une erreure interne s'est produite...")
                 return
             }
-            res.end(data);
+            const date = new Date();
+            const name = "Jules Junior Meva'a";
+            const page = data
+            .toString()
+            .replace("${date}", `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
+            .replace("${name}", name)
+            res.end(page);
         });
     }else if (req.url === "/home") {
         // Status de la réponse
