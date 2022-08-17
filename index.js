@@ -1,65 +1,28 @@
-// Importation du packet permettant la création d'un serveur http
-import { createServer, IncomingMessage, ServerResponse } from 'http';
-import {readFile} from "fs";
+import express from "express";
+import path from "path";
+import {fileURLToPath} from 'url';
 
-// Déclaration de l'hote qui permettra l'acces au serveur
-const hostname = '127.0.0.1';
-
-// Déclaration du port qui permettra l'acces au serveur
+const app = express();
 const port = 3000;
 
 /**
- * Fonction exéctée lors de l'access au serveur
- * @param req {IncomingMessage} information sur la requête
- * @param res {ServerResponse} information sur la reponse
+ * Retourne le chemin absolu en fonction du nom du fichier et du dossier qui contient index.js
+ * @param {string} chemin 
+ * @return {string} le chemin absolu
  */
-function requestListener(req, res) {
-    console.log(req.url);
-    if (req.url === "/") {
-        res.statusCode = 200;
-        // type de contenu envoyé dans la réponse
-        res.setHeader('Content-Type', 'text/html');
-        // Lecture du fichier home.html et rendu de son contenu
-        readFile("./app/index.html", (err, data) => {
-            if (err) {
-                console.log(err);
-                res.statusCode = 500;
-                res.end("Une erreure interne s'est produite...")
-                return
-            }
-            const date = new Date();
-            const name = "Jules Junior Meva'a";
-            const page = data
-            .toString()
-            .replace("${date}", `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
-            .replace("${name}", name)
-            res.end(page);
-        });
-    }else if (req.url === "/home") {
-        // Status de la réponse
-        res.statusCode = 200;
-        // type de contenu envoyé dans la réponse
-        res.setHeader('Content-Type', 'text/html');
-        // Lecture du fichier home.html et rendu de son contenu
-        readFile("./app/home.html", (err, data) => {
-            if (err) {
-                console.log(err);
-                res.statusCode = 500;
-                res.end("Une erreure interne s'est produite...")
-                return
-            }
-            res.end(data);
-        });
-    }else{
-        res.statusCode = 404;
-        res.end("Page introuvable !");
-    }
+const getAbsolutePath = (chemin) => {
+    const __filename = fileURLToPath(import.meta.url);
+    return path.join(path.dirname(__filename),'app',chemin);
 }
 
-// Creation du serveur http
-const server = createServer(requestListener);
+app.get("/", (req, res) => {
+    res.render(getAbsolutePath('index.html'));
+})
 
-// Démarrage du serveur sur le port et le nom d'hote défini
-server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
-});
+app.get("/home", (req, res) => {
+    res.sendFile(getAbsolutePath('home.html'));
+})
+
+app.listen(port, () => {
+    console.log(`App listening on port http://localhost:${port}`)
+})
