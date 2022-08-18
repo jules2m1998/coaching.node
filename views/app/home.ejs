@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <%- include('../partial/head', {title: "Welcome to my home !"}); %>
 </head>
 <body>
+    <%- include('../partial/header'); %>
     <h1>Mon site en node js</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti quod dolores maxime sapiente veniam, placeat sint necessitatibus, alias ducimus voluptatum voluptates. Consectetur excepturi illo voluptas eum alias soluta iste quo.</p>
     <img src="https://picsum.photos/600/600" alt="Image">
-    <a href="/">Accueil</a>
+    <%- include('../partial/footer') %> 
 </body>
 </html>

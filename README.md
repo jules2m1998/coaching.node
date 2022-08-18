@@ -90,3 +90,11 @@ Une fois l'installation effectuée modifier la ligne ```"dev": "node index"``` p
 ```console
 npm install express --save
 ```
+
+### Installation du moteur de template
+
+Nous permettra d'envoyer des données à nos pages html
+
+```console
+npm install ejs --save
+```

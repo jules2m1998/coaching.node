@@ -5,22 +5,17 @@ import {fileURLToPath} from 'url';
 const app = express();
 const port = 3000;
 
-/**
- * Retourne le chemin absolu en fonction du nom du fichier et du dossier qui contient index.js
- * @param {string} chemin 
- * @return {string} le chemin absolu
- */
-const getAbsolutePath = (chemin) => {
-    const __filename = fileURLToPath(import.meta.url);
-    return path.join(path.dirname(__filename),'app',chemin);
-}
+// choix du moteur de rendu
+app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
-    res.render(getAbsolutePath('index.html'));
+    const date = new Date();
+    // rendu avec des données
+    res.render('app/index', {name: 'Jules junior', date, list: ["Tomate", "Salade", "Avocat"]});
 })
 
 app.get("/home", (req, res) => {
-    res.sendFile(getAbsolutePath('home.html'));
+    res.render('app/home');
 })
 
 app.listen(port, () => {
